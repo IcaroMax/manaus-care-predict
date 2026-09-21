@@ -42,7 +42,7 @@ export function PredictivePanel({ ubs }: { ubs: Ubs }) {
   };
 
   const slotAvailable = useMemo(() => isSlotAvailable(ubs, day, slot), [ubs, day, slot]);
-  const level = slotAvailable ? ubs.demand[day][slot] : null;
+  const level = slotAvailable ? (ubs.demand?.[day]?.[slot] ?? null) : null;
 
   return (
     <Card>
@@ -53,11 +53,11 @@ export function PredictivePanel({ ubs }: { ubs: Ubs }) {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-5">
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid gap-4 sm:grid-cols-2" role="group" aria-label="Filtros da previsão de demanda">
           <div className="space-y-2">
             <Label htmlFor="day-select">Dia da semana</Label>
             <Select value={day} onValueChange={handleDayChange}>
-              <SelectTrigger id="day-select" className="w-full">
+              <SelectTrigger id="day-select" className="w-full" aria-label="Selecione o dia da semana">
                 <SelectValue placeholder="Selecione o dia" />
               </SelectTrigger>
               <SelectContent>
@@ -78,7 +78,7 @@ export function PredictivePanel({ ubs }: { ubs: Ubs }) {
               onValueChange={(v) => setSlot(v as TimeSlot)}
               disabled={!dayIsOpen}
             >
-              <SelectTrigger id="slot-select" className="w-full">
+              <SelectTrigger id="slot-select" className="w-full" aria-label="Selecione a faixa horária">
                 <SelectValue placeholder="Selecione a faixa" />
               </SelectTrigger>
               <SelectContent>
@@ -96,42 +96,45 @@ export function PredictivePanel({ ubs }: { ubs: Ubs }) {
           </div>
         </div>
 
-        {!slotAvailable ? (
-          <div
-            className="rounded-xl border border-border bg-muted/40 p-6 text-center shadow-sm"
-            role="status"
-          >
-            <div className="flex flex-col items-center gap-2 text-foreground/80">
-              <CalendarX className="size-8" aria-hidden="true" />
-              <p className="font-medium">Unidade fechada neste período — sem previsão de atendimento</p>
-              <p className="max-w-sm text-sm">Atendimento: {ubs.hours}.</p>
-              <p className="max-w-sm text-xs">Dias com atendimento: {openDaysLabel(ubs)}.</p>
+        {/* Região dinâmica com aria-live para tecnologias assistivas (WCAG 4.1.3) */}
+        <div aria-live="polite" aria-atomic="true">
+          {!slotAvailable ? (
+            <div
+              className="rounded-xl border border-border bg-muted/40 p-6 text-center shadow-sm"
+              role="status"
+            >
+              <div className="flex flex-col items-center gap-2 text-foreground/80">
+                <CalendarX className="size-8" aria-hidden="true" />
+                <p className="font-medium">Unidade fechada neste período — sem previsão de atendimento</p>
+                <p className="max-w-sm text-sm">Atendimento: {ubs.hours}.</p>
+                <p className="max-w-sm text-xs">Dias com atendimento: {openDaysLabel(ubs)}.</p>
+              </div>
             </div>
-          </div>
-        ) : (
-          <div className="rounded-xl border border-border bg-card p-6 text-center shadow-sm">
-            <p className="text-sm font-medium text-foreground/80">
-              Nível de demanda previsto — {WEEK_DAYS.find((d) => d.value === day)?.label},{" "}
-              {TIME_SLOTS.find((s) => s.value === slot)?.label}
-            </p>
-            {level ? (
-              <div className="mt-4 space-y-3">
-                <DemandBadge level={level} large />
-                <p className="mx-auto max-w-sm text-sm text-foreground/80">
-                  <DemandDescription level={level} />
-                </p>
-              </div>
-            ) : (
-              <div className="mt-4 flex flex-col items-center gap-2 text-foreground/80">
-                <Database className="size-8" aria-hidden="true" />
-                <p className="max-w-sm text-sm">
-                  Dados históricos insuficientes para esta combinação de dia e horário. Não é
-                  possível gerar uma estimativa confiável.
-                </p>
-              </div>
-            )}
-          </div>
-        )}
+          ) : (
+            <div className="rounded-xl border border-border bg-card p-6 text-center shadow-sm">
+              <p className="text-sm font-medium text-foreground/80">
+                Nível de demanda previsto — {WEEK_DAYS.find((d) => d.value === day)?.label},{" "}
+                {TIME_SLOTS.find((s) => s.value === slot)?.label}
+              </p>
+              {level ? (
+                <div className="mt-4 space-y-3">
+                  <DemandBadge level={level} large />
+                  <p className="mx-auto max-w-sm text-sm text-foreground/80">
+                    <DemandDescription level={level} />
+                  </p>
+                </div>
+              ) : (
+                <div className="mt-4 flex flex-col items-center gap-2 text-foreground/80">
+                  <Database className="size-8" aria-hidden="true" />
+                  <p className="max-w-sm text-sm">
+                    Dados históricos insuficientes para esta combinação de dia e horário. Não é
+                    possível gerar uma estimativa confiável.
+                  </p>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
 
         <MethodologyAlert />
       </CardContent>

@@ -20,6 +20,16 @@
 
 ---
 
+## [0.2.4] - 2026-09-20
+
+### Corrigido (Fixed)
+- **Acessibilidade (WCAG 2.5.5 / RNF02 — Alvo de Toque):** Ampliação da área clicável e de toque para a dimensão mínima de 44 × 44 pixels (`min-h-11` e `h-12`) no logótipo, nos links do cabeçalho (`Header.tsx`) e no botão de geolocalização (`LocationButton.tsx`), prevenindo toques acidentais em dispositivos móveis[cite: 5].
+- **Acessibilidade (WCAG 3.1.1 — Idioma do Documento):** Declaração explícita de `lang="pt-BR"` na raiz do layout (`src/routes/__root.tsx`) e na página de erro (`src/lib/error-page.ts`), garantindo a pronúncia fonética correta por tecnologias assistivas.
+- **Acessibilidade (WCAG 3.3.2 — Rótulos e Instruções):** Associação semântica de atributos descritivos e rótulos explícitos nos seletores de dia da semana e faixa horária[cite: 5].
+- **Acessibilidade (WCAG 4.1.3 — Mensagens de Status):** Adição dos atributos `aria-live="polite"` e `aria-atomic="true"` no contentor de exibição da demanda preditiva em `PredictivePanel.tsx`, permitindo que leitores de ecrã vocalizem mudanças de fluxo assincronamente sem transferir o foco do utilizador[cite: 5].
+
+---
+
 ## [0.2.3] - 2026-09-20
 
 ### Corrigido (Fixed)
