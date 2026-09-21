@@ -95,9 +95,10 @@ function UbsListPage() {
               onClick={() => setZone(option)}
               aria-pressed={selected}
               className={cn(
-                "min-h-11 rounded-full border px-4 py-2 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none",
+                "min-h-11 rounded-full border px-4 py-2 text-sm font-medium transition-colors",
+                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2",
                 selected
-                  ? "border-primary bg-primary text-primary-foreground"
+                  ? "border-primary bg-primary text-primary-foreground focus-visible:ring-offset-background"
                   : "border-border bg-card text-foreground hover:bg-accent",
               )}
             >

@@ -20,6 +20,17 @@
 
 ---
 
+## [0.2.3] - 2026-09-20
+
+### Corrigido (Fixed)
+- **Acessibilidade (WCAG 2.4.7 — Foco Visível):** Implementação de anéis de foco destacados via utilitários do Tailwind CSS (`focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2`) em todos os elementos interativos da aplicação:
+  - Logotipo e links de rota no cabeçalho institucional (`src/components/prevsus/Header.tsx`).
+  - Botões de seleção rápida por zona geográfica de Manaus (`src/routes/ubs.index.tsx`)[cite: 3].
+  - Cartões interativos de acesso às unidades de saúde (`src/components/prevsus/UbsCard.tsx`)[cite: 3].
+- **Ergonomia de Teclado (WCAG 2.1.1):** Eliminação da perda de indicador de foco decorrente do reset de estilos nativos do navegador, assegurando rastreamento visual contínuo durante a tabulação sequencial (`Tab` / `Shift+Tab`)[cite: 3].
+
+---
+
 ## [0.2.2] - 2026-09-20
 
 ### Corrigido (Fixed)

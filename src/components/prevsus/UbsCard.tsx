@@ -8,7 +8,11 @@ import type { Ubs } from "@/lib/prevsus-data";
 
 export function UbsCard({ ubs, distanceKm }: { ubs: Ubs; distanceKm?: number | undefined }) {
   return (
-    <Link to="/ubs/$id" params={{ id: ubs.id }} className="block">
+    <Link
+      to="/ubs/$id"
+      params={{ id: ubs.id }}
+      className="block rounded-xl transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2"
+    >
       <Card className="h-full transition-shadow hover:shadow-md">
         <CardHeader className="pb-2">
           <div className="flex items-start justify-between gap-2">

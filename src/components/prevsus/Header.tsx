@@ -5,7 +5,10 @@ export function Header() {
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-primary text-primary-foreground">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
-        <Link to="/" className="flex items-center gap-3">
+        <Link
+          to="/"
+          className="flex items-center gap-3 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-primary"
+        >
           <span className="flex size-10 items-center justify-center rounded-lg bg-primary-foreground/15">
             <Activity className="size-5" aria-hidden="true" />
           </span>
@@ -28,7 +31,7 @@ export function Header() {
           <nav className="flex items-center gap-1 text-sm font-medium">
             <Link
               to="/"
-              className="rounded-md px-3 py-2 transition-colors font-medium"
+              className="rounded-md px-3 py-2 transition-colors font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-primary"
               activeProps={{ className: "!bg-white !text-[#1E3A8A] font-semibold shadow-xs" }}
               inactiveProps={{ className: "text-white/85 hover:bg-white/10 hover:text-white" }}
               activeOptions={{ exact: true }}
@@ -37,7 +40,7 @@ export function Header() {
             </Link>
             <Link
               to="/ubs"
-              className="rounded-md px-3 py-2 transition-colors font-medium"
+              className="rounded-md px-3 py-2 transition-colors font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-primary"
               activeProps={{ className: "!bg-white !text-[#1E3A8A] font-semibold shadow-xs" }}
               inactiveProps={{ className: "text-white/85 hover:bg-white/10 hover:text-white" }}
             >
