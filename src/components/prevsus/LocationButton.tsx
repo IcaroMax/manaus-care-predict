@@ -20,6 +20,7 @@ export function LocationButton({
         type="button"
         variant="default"
         onClick={onClear}
+        className="h-12 min-h-11 gap-2 px-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2"
         aria-label="Desativar ordenação por proximidade e voltar à ordenação padrão"
       >
         <MapPin className="size-4" aria-hidden="true" />
@@ -30,7 +31,13 @@ export function LocationButton({
   }
 
   return (
-    <Button type="button" variant="secondary" onClick={onRequest} disabled={status === "loading"}>
+    <Button
+      type="button"
+      variant="secondary"
+      onClick={onRequest}
+      disabled={status === "loading"}
+      className="h-12 min-h-11 gap-2 px-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2"
+    >
       {status === "loading" ? (
         <Loader2 className="size-4 animate-spin" aria-hidden="true" />
       ) : (
