@@ -28,16 +28,18 @@ export function Header() {
           <nav className="flex items-center gap-1 text-sm font-medium">
             <Link
               to="/"
-              className="rounded-md px-3 py-2 text-primary-foreground/85 transition-colors hover:bg-primary-foreground/10 hover:text-primary-foreground"
-              activeProps={{ className: "bg-primary-foreground/15 text-primary-foreground" }}
+              className="rounded-md px-3 py-2 transition-colors font-medium"
+              activeProps={{ className: "!bg-white !text-[#1E3A8A] font-semibold shadow-xs" }}
+              inactiveProps={{ className: "text-white/85 hover:bg-white/10 hover:text-white" }}
               activeOptions={{ exact: true }}
             >
               Início
             </Link>
             <Link
               to="/ubs"
-              className="rounded-md px-3 py-2 text-primary-foreground/85 transition-colors hover:bg-primary-foreground/10 hover:text-primary-foreground"
-              activeProps={{ className: "bg-primary-foreground/15 text-primary-foreground" }}
+              className="rounded-md px-3 py-2 transition-colors font-medium"
+              activeProps={{ className: "!bg-white !text-[#1E3A8A] font-semibold shadow-xs" }}
+              inactiveProps={{ className: "text-white/85 hover:bg-white/10 hover:text-white" }}
             >
               Unidades
             </Link>
