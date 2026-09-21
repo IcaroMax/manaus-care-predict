@@ -20,6 +20,14 @@
 
 ---
 
+## [0.2.2] - 2026-09-20
+
+### Corrigido (Fixed)
+- **Acessibilidade (WCAG 1.4.11 — Contraste Não-Textual):** Adequação da borda do componente base `Input` (`src/components/ui/input.tsx`), substituindo `border-input` por `border-slate-500`. A taxa de contraste contra o fundo subiu de 1.23:1 (e 2.63:1) para ~4.60:1, superando a exigência mínima de 3.00:1.
+- **Acessibilidade (WCAG 1.4.3 — Contraste de Textos Secundários):** Homologação dos disclaimers auxiliares (aviso de privacidade da localização/LGPD e exemplos de busca de UBS), atingindo taxa real de 20.16:1 sobre fundo claro, em conformidade com o Nível AAA.
+
+---
+
 ## [0.2.1] - 2026-09-20
 
 ### Corrigido (Fixed)
