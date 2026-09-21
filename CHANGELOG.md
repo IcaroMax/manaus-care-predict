@@ -20,6 +20,19 @@
 
 ---
 
+## [0.2.5] - 2026-09-21
+
+### Corrigido (Fixed)
+- **Responsividade e Viewports Tablet/Desktop (RNF02):**
+  - *Tablet (768px a 1024px):* Reestruturação do layout da rota `/ubs/$id` com grid responsivo de 2 colunas lado a lado (`grid grid-cols-1 md:grid-cols-2 gap-6 items-start`), distribuindo harmonicamente o cartão de detalhes da UBS e o painel preditivo (`src/routes/ubs.$id.tsx`).
+  - *Desktop e Telas 4K (≥ 1280px até 3840px):* Inclusão de contenção com largura máxima (`max-w-5xl`) e centralização automática (`mx-auto`) envolvidas em tag semântica `<main>`, evitando dispersão lateral do conteúdo em monitores ultrawide e de alta resolução.
+- **Legibilidade e Ergonomia Tipográfica Móvel (RNF02 / WCAG 1.4.3):**
+  - Elevação do tamanho da fonte dos microtextos informativos e avisos de privacidade (LGPD/RNF04) de 12 px (`text-xs`) para 14 px (`text-sm`) em `src/routes/ubs.index.tsx` e `src/components/prevsus/UbsSearch.tsx`, assegurando leitura confortável à distância de uso móvel.
+- **Acessibilidade e Alvo de Toque (WCAG 2.5.5 / 2.4.7):**
+  - Ampliação da área clicável do link *"Voltar às unidades"* para a altura mínima de 44 px (`min-h-11 px-2`) acompanhada de indicador de foco por teclado (`focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2`).
+
+---
+
 ## [0.2.4] - 2026-09-20
 
 ### Corrigido (Fixed)

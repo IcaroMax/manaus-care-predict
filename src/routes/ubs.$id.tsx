@@ -44,16 +44,19 @@ export const Route = createFileRoute("/ubs/$id")({
 
 function UbsNotFound() {
   return (
-    <div className="mx-auto max-w-2xl px-4 py-16 text-center sm:px-6">
+    <main className="mx-auto max-w-2xl px-4 py-16 text-center sm:px-6">
       <h1 className="text-2xl font-bold text-foreground">Unidade não encontrada</h1>
       <p className="mt-2 text-muted-foreground">
         A UBS que você procura não está cadastrada ou o endereço está incorreto.
       </p>
-      <Link to="/ubs" className="mt-6 inline-flex items-center gap-1 text-sm font-medium text-primary">
+      <Link
+        to="/ubs"
+        className="mt-6 inline-flex min-h-11 items-center gap-1.5 rounded-md px-3 text-sm font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2"
+      >
         <ArrowLeft className="size-4" aria-hidden="true" />
         Voltar à lista de unidades
       </Link>
-    </div>
+    </main>
   );
 }
 
@@ -61,19 +64,24 @@ function UbsDetailPage() {
   const { ubs } = Route.useLoaderData();
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-10 sm:px-6">
-      <Link
-        to="/ubs"
-        className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline"
-      >
-        <ArrowLeft className="size-4" aria-hidden="true" />
-        Voltar às unidades
-      </Link>
+    <main className="w-full min-h-[calc(100vh-4rem)] py-6 sm:py-10">
+      <div className="mx-auto w-full max-w-5xl px-4 sm:px-6">
+        <div>
+          <Link
+            to="/ubs"
+            className="inline-flex min-h-11 items-center gap-1.5 rounded-md px-2 text-sm font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2"
+          >
+            <ArrowLeft className="size-4" aria-hidden="true" />
+            Voltar às unidades
+          </Link>
+        </div>
 
-      <div className="mt-6 space-y-6">
-        <UbsDetailsCard ubs={ubs} />
-        <PredictivePanel ubs={ubs} />
+        {/* Grid responsivo: 1 coluna no mobile, 2 colunas a partir de 768px (md:) */}
+        <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+          <UbsDetailsCard ubs={ubs} />
+          <PredictivePanel ubs={ubs} />
+        </div>
       </div>
-    </div>
+    </main>
   );
 }

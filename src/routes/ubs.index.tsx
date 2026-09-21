@@ -108,7 +108,7 @@ function UbsListPage() {
         })}
       </div>
 
-      <p className="mt-3 flex items-center gap-1.5 text-xs font-medium text-foreground/80">
+      <p className="mt-3 flex items-center gap-1.5 text-sm font-medium text-foreground/80">
         <ShieldCheck className="size-3.5 shrink-0" aria-hidden="true" />
         Sua localização é processada exclusivamente no seu dispositivo e não é armazenada.
       </p>

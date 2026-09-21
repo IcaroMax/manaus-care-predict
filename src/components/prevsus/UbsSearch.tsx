@@ -51,13 +51,13 @@ export function UbsSearch({
           onClear={clear}
         />
       </div>
-      <p className="mt-2 flex items-center gap-1.5 text-xs font-medium text-foreground/80">
+      <p className="mt-2 flex items-center gap-1.5 text-sm font-medium text-foreground/80">
         <ShieldCheck className="size-3.5 shrink-0" aria-hidden="true" />
         Sua localização é processada exclusivamente no seu dispositivo e não é armazenada.
       </p>
 
       {showSuggestions && query.trim() === "" && (
-        <p className="mt-3 text-xs font-medium text-foreground/80">
+        <p className="mt-3 text-sm font-medium text-foreground/80">
           Exemplos: UBS Dr. José Rayol dos Santos, UBS Nilton Lins, UBS Arthur Virgílio Filho
         </p>
       )}
