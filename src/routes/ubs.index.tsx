@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { Search, ShieldCheck } from "lucide-react";
 
@@ -35,8 +35,23 @@ export const Route = createFileRoute("/ubs/")({
 const ZONE_OPTIONS: (Zone | "Todas")[] = ["Todas", ...ZONES];
 
 function UbsListPage() {
-  const [query, setQuery] = useState("");
-  const [zone, setZone] = useState<Zone | "Todas">("Todas");
+  const [query, setQuery] = useState(() => {
+    if (typeof window !== "undefined") {
+      return sessionStorage.getItem("prevsus_search_query") || "";
+    }
+    return "";
+  });
+  const [zone, setZone] = useState<Zone | "Todas">(() => {
+    if (typeof window !== "undefined") {
+      return (sessionStorage.getItem("prevsus_search_zone") as Zone) || "Todas";
+    }
+    return "Todas";
+  });
+
+  useEffect(() => {
+    sessionStorage.setItem("prevsus_search_query", query);
+    sessionStorage.setItem("prevsus_search_zone", zone);
+  }, [query, zone]);
   const { status, position, request, clear } = useGeolocation();
 
   const results = useMemo(() => {

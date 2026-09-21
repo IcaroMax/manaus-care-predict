@@ -18,6 +18,16 @@
 - **Banco de Dados:** Conexão e persistência relacional em PostgreSQL para o histórico de atendimentos.
 - **Infraestrutura:** Empacotamento de microsserviços em contêineres Docker e pipeline CI/CD.
 
+---
+
+## [0.2.8] - 2026-09-21
+
+### Corrigido (Fixed)
+- **Usabilidade e Heurística H3 (Controle e Liberdade do Usuário):** Persistência dos parâmetros de busca (`query`) e filtro por zona (`zone`) via `sessionStorage` em `src/routes/ubs.index.tsx`[cite: 5].
+- **Navegação e Retenção de Contexto:** Atualização do link "Voltar às unidades" em `src/routes/ubs.$id.tsx` com `window.history.back()`, preservando os filtros ativos e a posição de rolagem ao retornar da visualização de detalhes da UBS[cite: 5].
+
+---
+
 ## [0.2.7] - 2026-09-21
 
 ### Modificado (Changed)

@@ -69,6 +69,12 @@ function UbsDetailPage() {
         <div>
           <Link
             to="/ubs"
+            onClick={(e) => {
+              if (window.history.length > 1) {
+                e.preventDefault();
+                window.history.back();
+              }
+            }}
             className="inline-flex min-h-11 items-center gap-1.5 rounded-md px-2 text-sm font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2"
           >
             <ArrowLeft className="size-4" aria-hidden="true" />
