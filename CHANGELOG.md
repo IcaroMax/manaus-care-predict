@@ -18,6 +18,12 @@
 - **Banco de Dados:** Conexão e persistência relacional em PostgreSQL para o histórico de atendimentos.
 - **Infraestrutura:** Empacotamento de microsserviços em contêineres Docker e pipeline CI/CD.
 
+## [0.2.6] - 2026-09-21
+
+### Corrigido (Fixed)
+
+- **Usabilidade e Heurística H1 (Visibilidade do Status do Sistema):** Substituição do booleano estático de operação por cálculo temporal dinâmico (`isUbsOpenNow`) em `src/lib/prevsus-data.ts`, sincronizando o status ("Aberta agora" ou "Fechada") com o relógio do dispositivo e a grade de funcionamento semanal da unidade.
+
 ---
 
 ## [0.2.5] - 2026-09-21

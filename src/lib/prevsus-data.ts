@@ -115,7 +115,7 @@ export const UBS_LIST: Ubs[] = [
     zone: "Centro-Sul",
     hours: "Segunda a sexta, 07h às 21h | Sábado, 08h às 12h",
     extendedHours: true,
-    isOpen: true,
+    isOpen: false,
     latitude: -3.0905,
     longitude: -60.0264,
     schedule: {
@@ -152,7 +152,7 @@ export const UBS_LIST: Ubs[] = [
     zone: "Centro-Sul",
     hours: "Segunda a sexta, 07h às 19h | Sábado, 08h às 12h",
     extendedHours: true,
-    isOpen: true,
+    isOpen: false,
     latitude: -3.0875,
     longitude: -60.018,
     schedule: {
@@ -217,7 +217,7 @@ export const UBS_LIST: Ubs[] = [
     zone: "Leste",
     hours: "Segunda a sexta, 07h às 17h",
     extendedHours: false,
-    isOpen: true,
+    isOpen: false,
     latitude: -3.0847,
     longitude: -59.9572,
     schedule: standardSchedule(),
@@ -246,7 +246,7 @@ export const UBS_LIST: Ubs[] = [
     zone: "Oeste",
     hours: "Segunda a sexta, 07h às 19h",
     extendedHours: true,
-    isOpen: true,
+    isOpen: false,
     latitude: -3.1232,
     longitude: -60.0416,
     schedule: {
@@ -283,7 +283,7 @@ export const UBS_LIST: Ubs[] = [
     zone: "Sul",
     hours: "Segunda a sexta, 07h às 17h | Sábado, 08h às 12h",
     extendedHours: true,
-    isOpen: true,
+    isOpen: false,
     latitude: -3.1438,
     longitude: -60.0131,
     schedule: {
@@ -313,9 +313,31 @@ export const UBS_LIST: Ubs[] = [
   },
 ];
 
+const JS_TO_WEEKDAY: Record<number, WeekDay> = {
+  0: "domingo",
+  1: "segunda",
+  2: "terca",
+  3: "quarta",
+  4: "quinta",
+  5: "sexta",
+  6: "sabado",
+};
+
+/**
+ * Avalia dinamicamente se a UBS está em operação no momento exato da consulta.
+ */
+export function isUbsOpenNow(ubs: Ubs, date: Date = new Date()): boolean {
+  const weekDay = JS_TO_WEEKDAY[date.getDay()];
+  const window = ubs.schedule?.[weekDay];
+  if (!window) return false;
+
+  const currentHour = date.getHours() + date.getMinutes() / 60;
+  return currentHour >= window.start && currentHour < window.end;
+}
+
 export function searchUbs(query: string, zone: Zone | "Todas" = "Todas"): Ubs[] {
   const q = query.trim().toLowerCase();
-  return UBS_LIST.filter((u) => {
+  return UBS_LIST.map((u) => ({ ...u, isOpen: isUbsOpenNow(u) })).filter((u) => {
     const matchesZone = zone === "Todas" || u.zone === zone;
     const matchesText =
       !q || u.name.toLowerCase().includes(q) || u.neighborhood.toLowerCase().includes(q);
@@ -324,7 +346,9 @@ export function searchUbs(query: string, zone: Zone | "Todas" = "Todas"): Ubs[] 
 }
 
 export function getUbsById(id: string): Ubs | undefined {
-  return UBS_LIST.find((u) => u.id === id);
+  const ubs = UBS_LIST.find((u) => u.id === id);
+  if (!ubs) return undefined;
+  return { ...ubs, isOpen: isUbsOpenNow(ubs) };
 }
 
 /** RB02: a faixa só está disponível se estiver inteiramente dentro da janela do dia */
