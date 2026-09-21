@@ -18,9 +18,17 @@
 - **Banco de Dados:** Conexão e persistência relacional em PostgreSQL para o histórico de atendimentos.
 - **Infraestrutura:** Empacotamento de microsserviços em contêineres Docker e pipeline CI/CD.
 
+## [0.2.7] - 2026-09-21
+
+### Modificado (Changed)
+
+- **Usabilidade e Heurísticas H3 e H4 (Controle, Liberdade e Consistência):** Integração de ordenação alfabética padrão (A–Z via `.sort()` com `localeCompare("pt-BR")`) no retorno de `searchUbs` em `src/lib/prevsus-data.ts`, garantindo que ao desativar a geolocalização ou limpar termos de busca, a listagem retorne a uma sequência lexicográfica determinística e intuitiva[cite: 5].
+
+---
+
 ## [0.2.6] - 2026-09-21
 
-### Corrigido (Fixed)
+### Modificado (Changed)
 
 - **Usabilidade e Heurística H1 (Visibilidade do Status do Sistema):** Substituição do booleano estático de operação por cálculo temporal dinâmico (`isUbsOpenNow`) em `src/lib/prevsus-data.ts`, sincronizando o status ("Aberta agora" ou "Fechada") com o relógio do dispositivo e a grade de funcionamento semanal da unidade.
 

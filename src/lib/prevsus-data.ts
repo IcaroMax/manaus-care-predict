@@ -337,12 +337,14 @@ export function isUbsOpenNow(ubs: Ubs, date: Date = new Date()): boolean {
 
 export function searchUbs(query: string, zone: Zone | "Todas" = "Todas"): Ubs[] {
   const q = query.trim().toLowerCase();
-  return UBS_LIST.map((u) => ({ ...u, isOpen: isUbsOpenNow(u) })).filter((u) => {
-    const matchesZone = zone === "Todas" || u.zone === zone;
-    const matchesText =
-      !q || u.name.toLowerCase().includes(q) || u.neighborhood.toLowerCase().includes(q);
-    return matchesZone && matchesText;
-  });
+  return UBS_LIST.map((u) => ({ ...u, isOpen: isUbsOpenNow(u) }))
+    .filter((u) => {
+      const matchesZone = zone === "Todas" || u.zone === zone;
+      const matchesText =
+        !q || u.name.toLowerCase().includes(q) || u.neighborhood.toLowerCase().includes(q);
+      return matchesZone && matchesText;
+    })
+    .sort((a, b) => a.name.localeCompare(b.name, "pt-BR"));
 }
 
 export function getUbsById(id: string): Ubs | undefined {
