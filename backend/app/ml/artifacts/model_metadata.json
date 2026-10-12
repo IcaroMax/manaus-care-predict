@@ -1,0 +1,23 @@
+{
+  "features": [
+    "ubs_idx",
+    "day_of_week",
+    "start_hour",
+    "is_extended_hours"
+  ],
+  "ubs_to_idx": {
+    "ubs-alfredo-campos": 0,
+    "ubs-arthur-virgilio-filho": 1,
+    "ubs-deodato-de-miranda-leao": 2,
+    "ubs-dr-jose-rayol-dos-santos": 3,
+    "ubs-megumo-kado": 4,
+    "ubs-nilton-lins": 5
+  },
+  "idx_to_demand": {
+    "0": "baixa",
+    "1": "moderada",
+    "2": "alta"
+  },
+  "min_sample_threshold": 15,
+  "accuracy": 0.8935185185185185
+}

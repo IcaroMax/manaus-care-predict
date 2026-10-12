@@ -1,13 +1,6 @@
 export type DemandLevel = "baixa" | "moderada" | "alta";
 
-export type WeekDay =
-  | "segunda"
-  | "terca"
-  | "quarta"
-  | "quinta"
-  | "sexta"
-  | "sabado"
-  | "domingo";
+export type WeekDay = "segunda" | "terca" | "quarta" | "quinta" | "sexta" | "sabado" | "domingo";
 
 export type TimeSlot = "08-10" | "10-12" | "13-15" | "15-17" | "17-19" | "19-21";
 
@@ -65,15 +58,7 @@ function weekly(
   base: SlotMap,
   overrides: Partial<Record<WeekDay, Partial<SlotMap>>> = {},
 ): Record<WeekDay, Record<TimeSlot, DemandLevel | null>> {
-  const days: WeekDay[] = [
-    "segunda",
-    "terca",
-    "quarta",
-    "quinta",
-    "sexta",
-    "sabado",
-    "domingo",
-  ];
+  const days: WeekDay[] = ["segunda", "terca", "quarta", "quinta", "sexta", "sabado", "domingo"];
   return days.reduce(
     (acc, day) => {
       acc[day] = { ...base, ...(overrides[day] ?? {}) };
@@ -328,6 +313,7 @@ const JS_TO_WEEKDAY: Record<number, WeekDay> = {
  */
 export function isUbsOpenNow(ubs: Ubs, date: Date = new Date()): boolean {
   const weekDay = JS_TO_WEEKDAY[date.getDay()];
+  if (!weekDay) return false;
   const window = ubs.schedule?.[weekDay];
   if (!window) return false;
 

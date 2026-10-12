@@ -22,9 +22,14 @@ export function UbsSearch({
     const list = searchUbs(query);
     if (status !== "active" || !position) return { list, distances: new Map<string, number>() };
     const distances = new Map<string, number>(
-      list.map((u) => [u.id, calculateDistanceKm(position.latitude, position.longitude, u.latitude, u.longitude)]),
+      list.map((u) => [
+        u.id,
+        calculateDistanceKm(position.latitude, position.longitude, u.latitude, u.longitude),
+      ]),
     );
-    const sorted = [...list].sort((a, b) => (distances.get(a.id) ?? 0) - (distances.get(b.id) ?? 0));
+    const sorted = [...list].sort(
+      (a, b) => (distances.get(a.id) ?? 0) - (distances.get(b.id) ?? 0),
+    );
     return { list: sorted, distances };
   }, [query, status, position]);
 

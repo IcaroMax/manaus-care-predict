@@ -3,8 +3,10 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Search, ShieldCheck } from "lucide-react";
 
 import { Input } from "@/components/ui/input";
+import { Skeleton } from "@/components/ui/skeleton";
 import { LocationButton } from "@/components/prevsus/LocationButton";
 import { UbsCard } from "@/components/prevsus/UbsCard";
+import { fetchUbsList } from "@/lib/api";
 import { calculateDistanceKm } from "@/lib/geo";
 import { ZONES, searchUbs, type Ubs, type Zone } from "@/lib/prevsus-data";
 import { useGeolocation } from "@/lib/use-geolocation";
@@ -48,21 +50,56 @@ function UbsListPage() {
     return "Todas";
   });
 
+  const [ubsList, setUbsList] = useState<Ubs[]>(() => searchUbs(query, zone));
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
   useEffect(() => {
     sessionStorage.setItem("prevsus_search_query", query);
     sessionStorage.setItem("prevsus_search_zone", zone);
   }, [query, zone]);
+
+  useEffect(() => {
+    let isCancelled = false;
+    setIsLoading(true);
+
+    const timer = setTimeout(() => {
+      fetchUbsList(query, zone)
+        .then((data) => {
+          if (!isCancelled) {
+            setUbsList(data);
+            setIsLoading(false);
+          }
+        })
+        .catch(() => {
+          if (!isCancelled) {
+            setUbsList(searchUbs(query, zone));
+            setIsLoading(false);
+          }
+        });
+    }, 250);
+
+    return () => {
+      isCancelled = true;
+      clearTimeout(timer);
+    };
+  }, [query, zone]);
+
   const { status, position, request, clear } = useGeolocation();
 
   const results = useMemo(() => {
-    const list = searchUbs(query, zone);
-    if (status !== "active" || !position) return { list, distances: new Map<string, number>() };
+    if (status !== "active" || !position)
+      return { list: ubsList, distances: new Map<string, number>() };
     const distances = new Map<string, number>(
-      list.map((u) => [u.id, calculateDistanceKm(position.latitude, position.longitude, u.latitude, u.longitude)]),
+      ubsList.map((u) => [
+        u.id,
+        calculateDistanceKm(position.latitude, position.longitude, u.latitude, u.longitude),
+      ]),
     );
-    const sorted = [...list].sort((a, b) => (distances.get(a.id) ?? 0) - (distances.get(b.id) ?? 0));
+    const sorted = [...ubsList].sort(
+      (a, b) => (distances.get(a.id) ?? 0) - (distances.get(b.id) ?? 0),
+    );
     return { list: sorted, distances };
-  }, [query, zone, status, position]);
+  }, [ubsList, status, position]);
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6">
@@ -128,19 +165,40 @@ function UbsListPage() {
         Sua localização é processada exclusivamente no seu dispositivo e não é armazenada.
       </p>
 
-      {results.list.length === 0 ? (
-        <p className="mt-10 text-center text-muted-foreground">
-          Nenhuma unidade encontrada
-          {query.trim() !== "" ? ` para “${query}”` : ""}
-          {zone !== "Todas" ? ` na Zona ${zone}` : ""}. Tente outro nome, bairro ou zona.
-        </p>
-      ) : (
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {results.list.map((ubs: Ubs) => (
-            <UbsCard key={ubs.id} ubs={ubs} distanceKm={results.distances.get(ubs.id)} />
-          ))}
-        </div>
-      )}
+      {/* Região dinâmica com feedback acessível */}
+      <div aria-live="polite" aria-busy={isLoading}>
+        {isLoading ? (
+          <div
+            className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
+            role="status"
+            aria-label="Carregando unidades de saúde"
+          >
+            {Array.from({ length: 6 }).map((_, index) => (
+              <div key={index} className="rounded-xl border border-border bg-card p-5 space-y-3">
+                <Skeleton className="h-6 w-3/4 rounded" />
+                <Skeleton className="h-4 w-1/2 rounded" />
+                <Skeleton className="h-4 w-full rounded" />
+                <div className="pt-2 flex justify-between">
+                  <Skeleton className="h-5 w-20 rounded" />
+                  <Skeleton className="h-5 w-16 rounded" />
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : results.list.length === 0 ? (
+          <p className="mt-10 text-center text-muted-foreground">
+            Nenhuma unidade encontrada
+            {query.trim() !== "" ? ` para “${query}”` : ""}
+            {zone !== "Todas" ? ` na Zona ${zone}` : ""}. Tente outro nome, bairro ou zona.
+          </p>
+        ) : (
+          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {results.list.map((ubs: Ubs) => (
+              <UbsCard key={ubs.id} ubs={ubs} distanceKm={results.distances.get(ubs.id)} />
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 }

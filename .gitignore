@@ -33,3 +33,5 @@ dist-ssr
 node_modules
 dist
 venvtcc/
+out/
+.pytest_cache/

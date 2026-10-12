@@ -3,11 +3,11 @@ import { ArrowLeft } from "lucide-react";
 
 import { PredictivePanel } from "@/components/prevsus/PredictivePanel";
 import { UbsDetailsCard } from "@/components/prevsus/UbsDetailsCard";
-import { getUbsById } from "@/lib/prevsus-data";
+import { fetchUbsById } from "@/lib/api";
 
 export const Route = createFileRoute("/ubs/$id")({
-  loader: ({ params }) => {
-    const ubs = getUbsById(params.id);
+  loader: async ({ params }) => {
+    const ubs = await fetchUbsById(params.id);
     if (!ubs) throw notFound();
     return { ubs };
   },
