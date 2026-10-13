@@ -49,7 +49,11 @@ function Index() {
           </div>
 
           <div className="mt-8 flex flex-wrap gap-3">
-            <Button asChild size="lg" variant="secondary">
+            <Button
+              asChild
+              size="lg"
+              className="min-h-11 bg-white text-[#1E3A8A] font-semibold shadow-md hover:bg-white/95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-primary"
+            >
               <Link to="/ubs">
                 Ver todas as unidades
                 <ArrowRight className="ml-1 size-4" aria-hidden="true" />

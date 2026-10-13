@@ -79,7 +79,7 @@ export function UbsSearch({
               <Link
                 to="/ubs/$id"
                 params={{ id: ubs.id }}
-                className="flex items-center justify-between gap-3 px-4 py-3 transition-colors hover:bg-accent"
+                className="flex items-center justify-between gap-3 px-4 py-3 transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2"
               >
                 <span>
                   <span className="block text-sm font-medium text-foreground">{ubs.name}</span>
